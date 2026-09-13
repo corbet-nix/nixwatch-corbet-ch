@@ -64,22 +64,13 @@
       # The cluster catalogue, for inspection without re-reading the file.
       lib.observability = import ./lib/observability.nix { };
 
-      # nixwatch-frames: the FIRST Rust crate in this repo, a socket CLIENT that streams the
-      # Gatus dashboard the observability half above stands up onto nixlock's kiosk display Unix
-      # socket (nixlock's own README "Streaming kiosk content" / BEHAVIORS.md DISPLAY-1/
-      # DISPLAY-2). It links no nixlock code at all -- the wire protocol is hand-rolled against a
-      # plain `std::os::unix::net::UnixStream` -- so this is an ordinary, dependency-light nix
-      # build: no git dependency, no outputHashes, no bindgen/PAM/Wayland link surface.
-      packages = forAllSystems (system: {
-        nixwatch-frames = (pkgsFor system).callPackage ./package.nix { };
-        default = self.packages.${system}.nixwatch-frames;
-      });
-
-      # The home-manager plane: runs nixwatch-frames as an ordinary graphical-session service that
-      # streams to whatever nixlock instance is running in the same session -- NOT a lock command;
-      # nixlock is the locker, this only ever feeds it frames. See home/kiosk.nix's own header.
-      homeManagerModules.kiosk = ./home/kiosk.nix;
-      homeManagerModules.default = self.homeManagerModules.kiosk;
+      # The home-manager plane: runs the cksk watch feed (built and released from its
+      # own product repository, corbet-labs/cksk -- this repo builds no binary anymore)
+      # as an ordinary graphical-session service that streams to whatever display server
+      # (nixlock today, clck tomorrow) runs in the same session -- NOT a lock command;
+      # the locker only ever receives frames. See home/watch.nix's own header.
+      homeManagerModules.watch = ./home/watch.nix;
+      homeManagerModules.default = self.homeManagerModules.watch;
 
       # The pure duration parser, exposed standalone -- the same "expose the builder function
       # for anyone who wants it without the module system" reasoning nixstorage uses for its
