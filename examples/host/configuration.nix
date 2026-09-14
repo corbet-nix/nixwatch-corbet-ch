@@ -65,6 +65,29 @@
       title = "example external API";
     };
 
+    # A mailbox login: proves YOUR account still authenticates, not just that port 993
+    # is open. A bare TCP/TLS port check passes while your own login is broken --
+    # expired password, locked account, moved mailbox -- and that is exactly the
+    # failure nobody else's probe can see for you. Credentials never live in the
+    # probe: they come from a root-only secret file the operator deploys separately
+    # (sops, a vault agent, a 0600 file -- nixwatch never sees how it got there),
+    # referenced by absolute path. A missing/unreadable secret fails LOUDLY: a
+    # silent skip would report a broken mailbox as healthy. Wire the check only
+    # once the secret exists -- or expect exactly one DOWN page as the wiring proof.
+    example-mailbox = {
+      probe = ''
+        test -r /run/secrets/example-mailbox.env || { echo "mailbox secret missing"; false; }
+        set -a; . /run/secrets/example-mailbox.env; set +a
+        curl -sf --max-time 15 --url "imaps://mail.example.org/INBOX;MAILINDEX=1" \
+          --user "$MAILBOX_USER:$MAILBOX_PASS" -o /dev/null
+      '';
+      interval = "5m";
+      deadline = "15m";
+      severity = "critical";
+      channel = "ops-page";
+      title = "example mailbox login";
+    };
+
     # The dead-man's-switch shape: an unconditional "still alive" beacon, on its own
     # schedule, dispatched through a channel a receiver with its own missed-heartbeat timeout
     # (or a human) is expected to be watching -- see the module README for why nixwatch
