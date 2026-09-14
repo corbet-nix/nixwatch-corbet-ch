@@ -70,6 +70,19 @@ in
         `$XDG_RUNTIME_DIR`). Only set this to point at a different session's socket.
       '';
     };
+
+    hostFeedPath = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      example = "/home/user/agents/state/cksk-host.json";
+      description = ''
+        Path to the host collector JSON (link rates, pool aggregates, disk temps
+        the kiosk cannot see itself -- see the cksk product's contrib/host-collector).
+        `null` (the default) leaves the network/pools rows as pending placeholders.
+        The file is read-only input: cksk never writes, locks, or trusts it beyond
+        a staleness bound (older than 120s reads as absent).
+      '';
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -77,10 +90,11 @@ in
     home.packages = [ cfg.package ];
 
     # The value channel this service's own ExecStart cannot carry inline. Keys match the binary's
-    # own FileConfig: gatus_url, socket_path.
+    # own FileConfig: gatus_url, socket_path, host_feed.
     xdg.configFile."cksk/config.json".text = builtins.toJSON (
       { gatus_url = cfg.gatusUrl; }
       // lib.optionalAttrs (cfg.socketPath != null) { socket_path = cfg.socketPath; }
+      // lib.optionalAttrs (cfg.hostFeedPath != null) { host_feed = cfg.hostFeedPath; }
     );
 
     systemd.user.services.cksk-watch = {
