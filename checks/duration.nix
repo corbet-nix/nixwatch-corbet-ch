@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 # checks/duration.nix
 #
 # Pure function tests for lib/duration.nix -- no NixOS eval-config anywhere in this file,

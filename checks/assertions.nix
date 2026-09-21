@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 # checks/assertions.nix
 #
 # Eval-time checks for modules/default.nix: each evaluates a real configuration through

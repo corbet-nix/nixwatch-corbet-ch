@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 # checks/default.nix
 #
 # Three kinds of test, combined into the flake outputs `nix flake check` runs:

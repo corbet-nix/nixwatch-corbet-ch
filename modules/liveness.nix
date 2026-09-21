@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 # modules/liveness.nix
 #
 # nixwatch.liveness: the CONSUMER side of "is this actually live" -- per host, per declared

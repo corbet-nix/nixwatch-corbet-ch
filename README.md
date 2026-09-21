@@ -4,7 +4,7 @@
 halves of knowing — the liveness verdict, raised exactly once per state transition on the
 channel it was told to use, and the metrics, dashboards and traces that explain it afterwards
 — and neither half ever carries the message itself: delivery is
-[nixpush](https://github.com/julian-corbet/nixpush-corbet-ch)'s job, always.**
+[nixpush](https://github.com/corbet-nix/nixpush-corbet-ch)'s job, always.**
 
 The alarm half is a liveness/heartbeat discipline as a NixOS module, and it is what exists
 today: named checks, each with a probe (or, for a heartbeat, no probe at all), an interval, a
@@ -69,7 +69,7 @@ render — that rule stops being a convention and becomes four structural refusa
 
 - **Not a notification transport. This exclusion is permanent, and widening the scope to
   dashboards did not touch it.** Every alert and every heartbeat beacon shells out to the
-  real [`nixpush`](https://github.com/julian-corbet/nixpush-corbet-ch) CLI
+  real [`nixpush`](https://github.com/corbet-nix/nixpush-corbet-ch) CLI
   (`nixpush send --channel <name> ...`) — this repo has no idea what a "provider" is, holds
   no API keys, and will never grow its own delivery logic, on either half.
   `nixwatch.checks.<name>.channel` only ever NAMES a nixpush channel; see
@@ -139,7 +139,7 @@ different words.
 ## Why nixwatch depends on nixpush, and never as a flake input
 
 `nixwatch.checks.<name>.channel` is a plain string naming a key in
-[nixpush](https://github.com/julian-corbet/nixpush-corbet-ch)'s own
+[nixpush](https://github.com/corbet-nix/nixpush-corbet-ch)'s own
 `nixpush.channels.<name>` — but this repo's `flake.nix` has no `nixpush` input at all, and
 never will. This is the "read a sibling defensively, never as a flake input" convention this
 design-system family reserves for PEER repos (as opposed to a genuinely lower layer): every
@@ -284,7 +284,7 @@ document is stale or absent, never that a present, fresh-looking one is lying.
 
 `modules/cluster.nix` is the other half: a cluster module (composed into a
 [nixidy](https://github.com/arnarg/nixidy) environment, beside
-[nixk3s](https://github.com/julian-corbet/nixk3s-corbet-ch)'s app grammar) that declares six kinds
+[nixk3s](https://github.com/corbet-nix/nixk3s-corbet-ch)'s app grammar) that declares six kinds
 of workload and renders every one of them through that grammar rather than building Kubernetes
 objects of its own. It shares no evaluation with the host half above and imports nothing from it.
 
@@ -441,10 +441,10 @@ worse than one that never had it:
 ```nix
 # flake.nix (consumer side)
 {
-  inputs.nixwatch.url = "github:julian-corbet/nixwatch-corbet-ch";
+  inputs.nixwatch.url = "github:corbet-nix/nixwatch-corbet-ch";
   # nixpush is a SEPARATE, independent import -- nixwatch never pulls it in for you (see
   # "Why nixwatch depends on nixpush, and never as a flake input" above).
-  inputs.nixpush.url = "github:julian-corbet/nixpush-corbet-ch";
+  inputs.nixpush.url = "github:corbet-nix/nixpush-corbet-ch";
 
   outputs = { self, nixpkgs, nixwatch, nixpush, ... }: {
     nixosConfigurations.example-host = nixpkgs.lib.nixosSystem {
@@ -731,7 +731,7 @@ it fires when violated and stays silent when satisfied.
 | `checks/cluster-render.nix` | the manifests the cluster half actually produced, parsed and asserted field by field, including the two central ABSENCES: no observability coordinate in the alarm path's objects, and no derived address anywhere in the tree |
 | `experiments/` | open questions, plus the script that checks every upstream coordinate in the catalogue against the registry that serves it |
 | `studies/` | three write-ups from building the cluster half — the one-directional rule made structural, why the three pillars are three groups, and why an option nothing renders is never checked |
-| `LICENSE` | MIT |
+| `LICENSE-MIT` + `LICENSE-APACHE` | MIT OR Apache-2.0 |
 
 ## Status
 
@@ -783,20 +783,20 @@ against what a running store reports about itself (`experiments/README.md` #005)
 
 `nixwatch` is one of several small, independently-usable open-source projects sharing a
 common design system:
-[nixpush](https://github.com/julian-corbet/nixpush-corbet-ch) (the notification-dispatch
+[nixpush](https://github.com/corbet-nix/nixpush-corbet-ch) (the notification-dispatch
 mechanism every alert and heartbeat this module raises actually travels through — named by
 string, never a flake input; see
 [Why nixwatch depends on nixpush](#why-nixwatch-depends-on-nixpush-and-never-as-a-flake-input)),
-[nixk3s](https://github.com/julian-corbet/nixk3s-corbet-ch) (the app grammar, shared consumer
+[nixk3s](https://github.com/corbet-nix/nixk3s-corbet-ch) (the app grammar, shared consumer
 factory, and band model governing the two reachable workloads' slots — a consumer still composes
 the grammar directly, while this flake closes its exported cluster module over the matching factory),
-[nixstorage](https://github.com/julian-corbet/nixstorage-corbet-ch) (a sibling in spirit —
+[nixstorage](https://github.com/corbet-nix/nixstorage-corbet-ch) (a sibling in spirit —
 the same "hard-won rules as enforced modules, not documentation to remember" shape, and the
 same "read a sibling's config defensively, never as a flake input" convention this repo
 reuses for nixpush), and
-[nixpower](https://github.com/julian-corbet/nixpower-corbet-ch) (another sibling in the same
+[nixpower](https://github.com/corbet-nix/nixpower-corbet-ch) (another sibling in the same
 family). Use any of them together or standalone.
 
-## License
+## Licence
 
-MIT.
+Outbound licence is `MIT OR Apache-2.0`. See `LICENSE-MIT` and `LICENSE-APACHE`; every source file carries `SPDX-License-Identifier: MIT OR Apache-2.0`.

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 # modules/default.nix
 #
 # nixwatch's ALARM half: the mechanism for deciding a thing is unhealthy and raising an alarm

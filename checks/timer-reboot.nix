@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 # checks/timer-reboot.nix
 #
 # Runtime regression proof for the timer bootstrap contract. The failure this guards requires

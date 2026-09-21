@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 # checks/liveness-behavior.nix
 #
 # BUILD-LEVEL proof for lib/liveness.nix's generated `nixwatch-is-it-live` script, the same

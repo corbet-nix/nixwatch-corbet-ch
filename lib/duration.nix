@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 # lib/duration.nix
 #
 # Parses a small, exactly-defined subset of duration syntax ("30s", "5m", "2h", "1d", or a

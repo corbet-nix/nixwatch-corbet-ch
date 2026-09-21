@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 # The cksk watch feed on the home-manager plane: put the cksk binary on PATH, render its
 # per-host config.json, and run it as an ORDINARY graphical-session service.
 #

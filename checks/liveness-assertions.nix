@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 # checks/liveness-assertions.nix
 #
 # Eval-time checks for modules/liveness.nix: each evaluates a real configuration through

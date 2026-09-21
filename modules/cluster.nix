@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 #
 # nixwatch's cluster surface: six catalogue roots translated through nixk3s.
 #

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 #
 # The cluster catalogue: what the in-cluster half of knowing is made of. Six groups, and the
 # split between them is the subject rather than a filing convention:

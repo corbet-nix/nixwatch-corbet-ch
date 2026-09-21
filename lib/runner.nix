@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 # lib/runner.nix
 #
 # Builds ONE check's generated shell script -- a plain function of its own arguments, not a

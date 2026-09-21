@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 {
   description = "Both halves of knowing whether a host is healthy: the outside-in alarm half -- named liveness checks (probe or heartbeat), a staleness deadline per check, gate relationships so one shared root cause pages once instead of fanning out, dispatched through a named nixpush channel -- and the in-cluster observability half, metrics and dashboards and traces, which explains afterwards what the alarm only announced. Never a notification transport (delivery is nixpush's job, no API keys here), and never any one operator's monitoring policy -- see README.md.";
 
@@ -18,7 +19,7 @@
     };
 
     nixk3s = {
-      url = "git+https://github.com/julian-corbet/nixk3s-corbet-ch";
+      url = "git+https://github.com/corbet-nix/nixk3s-corbet-ch";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixidy.follows = "nixidy";
     };

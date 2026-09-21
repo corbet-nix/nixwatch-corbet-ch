@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 # checks/behavior.nix
 #
 # BUILD-LEVEL proof: nixwatch is the one repo in this design-system family whose whole

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 # Placeholder values for the cluster module — the file that makes the render check real.
 # `nix flake check` renders this whole declaration through the real app grammar and the real
 # renderer, so a module that stops evaluating, or that grows a required value nobody supplies,

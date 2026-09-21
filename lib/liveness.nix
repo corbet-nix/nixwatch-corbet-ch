@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 # lib/liveness.nix
 #
 # Builds ONE host's is-it-live report script -- a plain function of its own arguments (a
